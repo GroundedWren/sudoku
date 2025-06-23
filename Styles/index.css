@@ -24,4 +24,7 @@ footer {
 		text-align: center;
 		margin: 5px;
 	}
+	img {
+		display: inline;
+	}
 }
