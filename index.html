@@ -12,19 +12,96 @@
 	<script src="./Scripts/SVGIconControl.js"></script>
 	<script src="./Scripts/SwitchControl.js"></script>
 	<script src="./Scripts/ToasterControl.js"></script>
+	<script src="./Scripts/ActionBatcherGizmo.js"></script>
+
+	<script src="./Scripts/Display.js"></script>
+	<script src="./Scripts/Sudoku.js"></script>
+	<script src="./Scripts/CellControl.js"></script>
 
 	<link href="./Styles/index.css" rel="stylesheet" type="text/css">
 	<script src="./Scripts/index.js"></script>
 </head>
 <body>
 	<header>
-		<a class="hide-until-focus full" href="#main">Skip to content</a>
-		<h1>Sudoku</h1>
+		<div>
+			<a class="hide-until-focus full" href="#main">Skip to content</a>
+			<noscript><strong>This site may not function properly without JavaScript enabled.</strong></noscript>
+		</div>
+		<div><h1>Sudoku</h1></div>
+		<div class="bubble-container">
+			<button onclick="document.getElementById('diaInfo').showModal()">
+				<gw-icon iconKey="circle-info" name="Instructions"></gw-icon>
+			</button>
+			<details class="bubbler">
+				<summary>
+					<gw-icon iconKey="gear" name="Settings"></gw-icon>
+				</summary>
+				<div class="bubble">
+					<label>
+						<gw-switch><input id="cbxDarkMode"
+							type="checkbox"
+							oninput="localStorage.setItem('theme', event.target.checked ? 'dark' : 'light');GW.Display.updatePrefs();"
+						></gw-switch>
+						Dark mode
+					</label>
+				</div>
+			</details>
+			<button onclick="document.getElementById('diaNew').showModal()">New Game</button>
+		</div>
 	</header>
 	<main id="main">
-		<p>
-			Hello world!
-		</p>
+		<gw-shortcuts id="shortsGame"
+			role="application"
+			aria-labelledby="spnGameLbl"
+			aria-describedby="asiGame"
+
+			code_0="ArrowRight"
+			handler_0="GW.Sudoku.onGameKbdNav(event)"
+			info_0="Move right a column"
+
+			code_1="ArrowLeft"
+			handler_1="GW.Sudoku.onGameKbdNav(event)"
+			info_1="Move left a column"
+
+			code_2="ArrowUp"
+			handler_2="GW.Sudoku.onGameKbdNav(event)"
+			info_2="Move up a row"
+
+			code_3="ArrowDown"
+			handler_3="GW.Sudoku.onGameKbdNav(event)"
+			info_3="Move down a row"
+
+			code_4="PageUp"
+			handler_4="GW.Sudoku.onGameKbdNav(event)"
+			info_4="Move up a square"
+
+			code_5="PageDown"
+			handler_5="GW.Sudoku.onGameKbdNav(event)"
+			info_5="Move down a square"
+
+			code_6="Home"
+			handler_6="GW.Sudoku.onGameKbdNav(event)"
+			info_6="Move left a square"
+
+			code_7="End"
+			handler_7="GW.Sudoku.onGameKbdNav(event)"
+			info_7="Move right a square"
+
+			code_8="Alt+S"
+			handler_8="GW.Controls.Shortcuts.reportShortcuts(event)"
+			info_8="Displays available shortcuts"
+		>
+			<section id="secGame"></section>
+			<aside id="asiGame" style="visibility: hidden;">
+				<gw-icon iconKey="keyboard" name="Keyboard navigation available"></gw-icon>
+				<span class="sr-only">in focus mode</span>
+				<span>(<kbd>Alt</kbd>+<kbd>S</kbd>)</span>
+			</aside>
+		</gw-shortcuts>
+		<form id="frmCell" aria-labelledby="hCell">
+			<h2 id="hCell">Cell</h2>
+			<p>Forthcoming!</p>
+		</form>
 	</main>
 	<footer>
 		<figure>
@@ -34,5 +111,42 @@
 			<figcaption>Created by Vera in 2025</figcaption>
 		</figure>
 	</footer>
+	<dialog id="diaInfo">
+		<article>
+			<gw-icon iconKey="circle-info" name="info" tabindex="-1" role="heading" aria-level="1" autofocus></gw-icon>
+			<article>
+				<h2>Intro</h2>
+				<p>
+					Welcome to the Grounded Wren Sudoku player!
+				</p>
+			</article>
+			<footer>
+				<a class="full" href="mailto:vera@groundedwren.com?subject=Sudoku">Give feedback</a>
+				<button onclick="document.getElementById('diaInfo').close();">Close</button>
+			</footer>
+		</article>
+	</dialog>
+	<dialog id="diaNew">
+		<form aria-labelledby="hNew" onsubmit="GW.Sudoku.onNewGame(event);document.getElementById('diaNew').close();">
+			<h2 id="hNew">New Game</h2>
+			<p>Content here!</p>
+			<footer>
+				<button type="submit">Begin</button>
+				<button type="button" onclick="document.getElementById('diaNew').close()">Cancel</button>
+			</footer>
+		</form>
+	</dialog>
+	<div class="hidden">
+		<span id="spnGameLbl">Sudoku</span>
+		<span id="spnSquareLbl-1">Square 1 of 9</span>
+		<span id="spnSquareLbl-2">Square 2 of 9</span>
+		<span id="spnSquareLbl-3">Square 3 of 9</span>
+		<span id="spnSquareLbl-4">Square 4 of 9</span>
+		<span id="spnSquareLbl-5">Square 5 of 9</span>
+		<span id="spnSquareLbl-6">Square 6 of 9</span>
+		<span id="spnSquareLbl-7">Square 7 of 9</span>
+		<span id="spnSquareLbl-8">Square 8 of 9</span>
+		<span id="spnSquareLbl-9">Square 9 of 9</span>
+	</div>
 </body>
 </html>
