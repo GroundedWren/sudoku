@@ -52,7 +52,35 @@
 							type="checkbox"
 							oninput="localStorage.setItem('hide-crosshairs', event.target.checked ? 'false' : 'true');GW.Sudoku.Display.updatePrefs();"
 						></gw-switch>
-						Show crosshairs
+						Crosshairs
+					</label>
+					<label>
+						<gw-switch><input id="cbxSquareColors"
+							type="checkbox"
+							oninput="localStorage.setItem('no-square-colors', event.target.checked ? 'false' : 'true');GW.Sudoku.Display.updatePrefs();"
+						></gw-switch>
+						Square colors
+					</label>
+					<label>
+						<gw-switch><input id="cbxNumberColors"
+							type="checkbox"
+							oninput="localStorage.setItem('no-number-colors', event.target.checked ? 'false' : 'true');GW.Sudoku.Display.updatePrefs();"
+						></gw-switch>
+						Number colors
+					</label>
+					<label>
+						<gw-switch><input id="cbxBorderColors"
+							type="checkbox"
+							oninput="localStorage.setItem('no-border-colors', event.target.checked ? 'false' : 'true');GW.Sudoku.Display.updatePrefs();"
+						></gw-switch>
+						Border colors
+					</label>
+					<label>
+						<gw-switch><input id="cbxLockIcons"
+							type="checkbox"
+							oninput="localStorage.setItem('no-lock-icons', event.target.checked ? 'false' : 'true');GW.Sudoku.Display.updatePrefs();"
+						></gw-switch>
+						Lock icons
 					</label>
 				</div>
 			</details>

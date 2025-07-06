@@ -263,7 +263,7 @@ window.GW = window.GW || {};
 		crosshairsStylesheet.replaceSync(`
 			#secGame  {
 				gw-cell:is([data-row="${formBoundCell.Row}"], [data-col="${formBoundCell.Col}"], [data-squ="${formBoundCell.Square}"]) {
-					background-color: color-mix(in oklab, var(--selected-color), transparent 25%);
+					background-color: var(--selected-color);
 
 					.diamond {
 						opacity: 0.5;

@@ -31,11 +31,11 @@ window.GW = window.GW || {};
 			}
 			&:is([data-col="1"], [data-col="4"], [data-col="7"]) {
 				border-inline-start-color: var(--border-color-2);
-				border-inline-start-width: 2px;
+				border-inline-start-width: 1.5px;
 			}
 			&:is([data-col="2"], [data-col="5"], [data-col="8"]) {
 				border-inline-start-color: var(--border-color-3);
-				border-inline-start-width: 2px;
+				border-inline-start-width: 1.5px;
 			}
 			&:is([data-col="8"]) {
 				border-inline-end-color: var(--border-color);
@@ -47,11 +47,11 @@ window.GW = window.GW || {};
 			}
 			&:is([data-row="1"], [data-row="4"], [data-row="7"]) {
 				border-block-start-color: var(--border-color-4);
-				border-block-start-width: 2px;
+				border-block-start-width: 1.5px;
 			}
 			&:is([data-row="2"], [data-row="5"], [data-row="8"]) {
 				border-block-start-color: var(--border-color-5);
-				border-block-start-width: 2px;
+				border-block-start-width: 1.5px;
 			}
 			&:is([data-row="8"]) {
 				border-block-end-color: var(--border-color);
@@ -61,7 +61,7 @@ window.GW = window.GW || {};
 			.top {
 				display: flex;
 				width: 100%;
-				padding-inline: 1px;
+				padding-inline: 1.5px;
 				padding-block-start: 3px;
 
 				.pencil {
