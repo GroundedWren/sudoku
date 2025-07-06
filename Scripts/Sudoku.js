@@ -119,19 +119,26 @@ window.GW = window.GW || {};
 		
 		document.getElementById("hCell").innerText = `Cell ${formBoundCell.Coords}`;
 
-		document.getElementById("olbValue").querySelector(`fieldset`).innerHTML = `
+		const olbValue = document.getElementById("olbValue");
+		olbValue.querySelector(`fieldset`).innerHTML = `
 			<legend style="display: none;">Value</legend>
-			${getAvailableNumbers().map(number =>
+			${[1, 2, 3, 4, 5, 6, 7, 8, 9].map(number =>
 				`<label>
 					<input type="radio" name="value" value="${number}" ${ number === cellData.Number ? "checked" : ""}>
 					${number}
 				</label>`
 			).join("\n")}
 		`;
-	}
 
-	function getAvailableNumbers() {
-		return [1, 2, 3, 4, 5, 6, 7, 8, 9];
+		const spnLocked = document.getElementById("spnLocked");
+		if(cellData.Locked) {
+			spnLocked.classList.remove("hidden");
+			olbValue.classList.add("hidden");
+		}
+		else {
+			spnLocked.classList.add("hidden");
+			olbValue.classList.remove("hidden");
+		}
 	}
 
 	ns.saveBoundCell = () => {

@@ -56,8 +56,20 @@ window.GW = window.GW || {};
 				border-block-end-width: 3px;
 			}
 
-			.pencil {
-				font-size: 0.45em;
+			.top {
+				display: flex;
+				width: 100%;
+
+				.pencil {
+					font-size: 0.45em;
+				}
+
+				gw-icon[iconKey="lock"] {
+					.gw-icon {
+						width: 0.45em;
+						height: 0.45em;
+					}
+				}
 			}
 
 			.bkg {
@@ -255,7 +267,10 @@ window.GW = window.GW || {};
 		#doRender = () => {
 			const data = this.getData();
 			this.innerHTML = `
-				<div class="pencil"></div>
+				<div class="top">${data.Locked
+					? `<gw-icon iconKey="lock" title="Locked"></gw-icon>`
+					: `<div class="pencil"></div>`
+				}</div>
 				<div data-number="${data.Number}" class="bkg">
 					<div class="num">${data.Number || ""}</div>
 				</div>
