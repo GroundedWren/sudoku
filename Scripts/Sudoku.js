@@ -174,15 +174,8 @@ window.GW = window.GW || {};
 	ns.saveBoundCell = () => {
 		const data = formBoundCell.getData();
 
-		const selectedValueBtn =  document.querySelector(`input[name="value"]:checked`);
-		if(selectedValueBtn) {
-			data.Number = parseInt(selectedValueBtn.value);
-		}
-		else {
-			data.Number = null;
-		}
-
-		data.Pencil = [...document.querySelectorAll(`#clbPencil input:checked`)].map(inputEl => parseInt(inputEl.value));
+		data.Number = parseInt(document.getElementById("olbValue").Value);
+		data.Pencil = document.getElementById("clbPencil").Value.map(valStr => parseInt(valStr));
 	};
 
 	const crosshairsStylesheet = new CSSStyleSheet();
