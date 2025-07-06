@@ -50,6 +50,23 @@ window.GW = window.GW || {};
 
 	const onRender = () => {
 		localStorage.setItem("data", JSON.stringify(ns.Data));
+
+		const numberCounts = ns.Data.reduce((accu, rowAry) => {
+			accu = rowAry.reduce((accu, cellObj) => {
+				if(cellObj.Number !== null) {
+					accu[cellObj.Number] = accu[cellObj.Number] + 1;
+				}
+				return accu;
+			}, accu);
+			return accu;
+		}, {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0});
+
+		Object.entries(numberCounts).forEach(([number, count]) => {
+			const spnPlaced = document.getElementById(`spn${number}Placed`);
+			spnPlaced.innerText = count;
+			spnPlaced.setAttribute("data-valid", count === 9);
+			spnPlaced.setAttribute("data-invalid", count > 9);
+		});
 	};
 
 	ns.onGameFocusin = () => {
@@ -188,7 +205,7 @@ window.GW = window.GW || {};
 	ns.saveBoundCell = () => {
 		const data = formBoundCell.getData();
 
-		data.Number = parseInt(document.getElementById("olbValue").Value);
+		data.Number = parseInt(document.getElementById("olbValue").Value) || null;
 		data.Pencil = document.getElementById("clbPencil").Value.map(valStr => parseInt(valStr));
 	};
 

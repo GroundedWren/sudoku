@@ -16,6 +16,7 @@
 	--mark-color: #D2FCC5;
 	--accent-color: #D5B3D9;
 	--invalid-color: #5C01D8;
+	--invalid-text-background-color: #ff80c0;
 
 	--square-1-color: #d2f7f5;
 	--square-2-color: #c6acd2;
@@ -75,6 +76,7 @@
 		--mark-color: #005C08;
 		--accent-color: #8D4A95;
 		--invalid-color: #A35FFE;
+		--invalid-text-background-color: #660000;
 
 		--square-1-color: #136260;
 		--square-2-color: #432b4f;
