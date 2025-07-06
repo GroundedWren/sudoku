@@ -137,7 +137,7 @@ window.GW = window.GW || {};
 		}
 
 		formBoundCell = newCell;
-		applyCrosshairs(formBoundCell);
+		ns.applyCrosshairs();
 
 		cellData = formBoundCell.getData();
 
@@ -213,10 +213,14 @@ window.GW = window.GW || {};
 
 	const crosshairsStylesheet = new CSSStyleSheet();
 	document.adoptedStyleSheets.push(crosshairsStylesheet);
-	function applyCrosshairs(cell) {
+	ns.applyCrosshairs = function applyCrosshairs() {
+		if(!document.getElementById("cbxShowCrosshairs").checked || !formBoundCell) {
+			crosshairsStylesheet.replaceSync(``);
+			return
+		}
 		crosshairsStylesheet.replaceSync(`
 			#secGame  {
-				gw-cell:is([data-row="${cell.Row}"], [data-col="${cell.Col}"], [data-squ="${cell.Square}"]) {
+				gw-cell:is([data-row="${formBoundCell.Row}"], [data-col="${formBoundCell.Col}"], [data-squ="${formBoundCell.Square}"]) {
 					background-color: color-mix(in oklab, var(--selected-color), transparent 25%);
 
 					.diamond {

@@ -46,6 +46,13 @@
 						></gw-switch>
 						Dark mode
 					</label>
+					<label>
+						<gw-switch><input id="cbxShowCrosshairs"
+							type="checkbox"
+							oninput="localStorage.setItem('hide-crosshairs', event.target.checked ? 'false' : 'true');GW.Display.updatePrefs();"
+						></gw-switch>
+						Show crosshairs
+					</label>
 				</div>
 			</details>
 			<button onclick="document.getElementById('diaNew').showModal()">New Game</button>

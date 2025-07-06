@@ -20,5 +20,10 @@ window.GW = window.GW || {};
 				break;
 		}
 		document.documentElement.classList.toggle("theme-dark", cbxDarkMode.checked);
+
+		const cbxShowCrosshairs = document.getElementById("cbxShowCrosshairs");
+		const hideCrosshairs = localStorage.getItem("hide-crosshairs") === "true";
+		cbxShowCrosshairs.checked = !hideCrosshairs;
+		GW.Sudoku.applyCrosshairs();
 	}
 }) (window.GW.Display = window.GW.Display || {});
