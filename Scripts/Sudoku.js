@@ -15,14 +15,21 @@ window.GW = window.GW || {};
 	};
 	ns.generateGameData = function generateGameData() {
 		ns.Data = [];
-		const numHints = parseInt(localStorage.getItem("num-hints"));
-
 		for(let i = 0; i < 9; i++) {
 			ns.Data[i] = [];
 			for(let j = 0; j < 9; j++) {
 				ns.Data[i][j] = { Number: null, Locked: false, Pencil: [], Invalid: false };
 			}
 		}
+
+		const gameArray = ns.Generator.generateGame(parseInt(localStorage.getItem("num-hints")));
+		gameArray.forEach(gameCell => {
+			if(gameCell.Value) {
+				const cellObj = ns.Data[gameCell.Row - 1][gameCell.Col - 1];
+				cellObj.Number = gameCell.Value;
+				cellObj.Locked = true;
+			}
+		});
 	}
 
 	ns.renderGame = function renderGame() {
@@ -282,7 +289,7 @@ window.GW = window.GW || {};
 			return;
 		}
 		let isComplete = [...document.querySelectorAll(`#artNumbers span[data-valid="true"]`)].length === 9;
-		GW.Controls.Toaster.showToast(`Puzzle is valid 👍 ${isComplete ? "but incomplete 🤔" : "and complete 🥳"}`);
+		GW.Controls.Toaster.showToast(`Puzzle is valid 👍 ${isComplete ? "and complete 🥳" : "but incomplete 🤔" }`);
 	};
 	function detectAndMarkDuplicates(dataAry) {
 		const dataBuckets = dataAry.reduce((buckets, cellData) => {
