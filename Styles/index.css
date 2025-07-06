@@ -90,16 +90,29 @@ body {
 
 	display: flex;
 	flex-direction: column;
+}
 
+main {
+	margin: 5px;
+	max-width: 1100px;
+	margin-inline: auto;
+	flex-grow: 1;
+
+	display: grid;
+	grid-template-areas: 
+		"x g r"
+		"x c r";
+	align-items: start;
+	grid-template-rows: 0fr auto;
+	grid-template-columns: minmax(0, 300px) minmax(500px, auto) minmax(300px, auto);
+}
+
+@media(max-width: 800px) {
 	main {
-		margin: 5px;
-		max-width: 1100px;
-		margin-inline: auto;
-		flex-grow: 1;
-
-		> button {
-			margin-inline: auto;
-		}
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+		align-items: stretch;
 	}
 }
 
@@ -111,6 +124,11 @@ footer {
 	img {
 		display: inline;
 	}
+}
+
+#shortsGame {
+	grid-area: g;
+	display: block;
 }
 
 #secGame {
@@ -167,9 +185,11 @@ footer {
 }
 
 #frmCell  {
+	grid-area: c;
 	display: flex;
 	flex-direction: column;
 	gap: 4px;
+	margin-inline: 5px;
 
 	hgroup {
 		display: flex;
@@ -213,45 +233,62 @@ footer {
 	}
 }
 
+@media(max-width: 600px) {
+	#frmCell fieldset {
+		display: grid;
+		grid-template-columns: auto auto auto;
+	}
+}
+
 #clbPencil {
 	legend svg {
 		display: none;
 	}
 }
 
-ol[aria-labelledby="hNumbers"] {
-	display: grid;
-	grid-template-columns: auto auto auto;
-	row-gap: 5px;
-	justify-content: space-around;
-	justify-items: start;
-	
-	li {
-		background-color: var(--background-color);
-		padding-inline: 4px;
-		border-radius: 20px;
+#artNumbers {
+	ol {
+		display: grid;
+		grid-template-columns: auto auto auto;
+		row-gap: 5px;
+		justify-content: space-around;
+		justify-items: start;
+		
+		li {
+			background-color: var(--background-color);
+			padding-inline: 4px;
+			border-radius: 20px;
 
-		> span {
-			display: inline-flex;
-		}
-
-		gw-icon {
-			display: none;
-		}
-
-		&:has([data-valid="true"]) {
-			gw-icon[iconKey="check"] {
+			> span {
 				display: inline-flex;
 			}
-			background-color: var(--mark-color);
-		}
-		&:has([data-invalid="true"]) {
-			gw-icon[iconKey="xmark"] {
-				display: inline-flex;
+
+			gw-icon {
+				display: none;
 			}
-			background-color: var(--invalid-text-background-color);
+
+			&:has([data-valid="true"]) {
+				gw-icon[iconKey="check"] {
+					display: inline-flex;
+				}
+				background-color: var(--mark-color);
+			}
+			&:has([data-invalid="true"]) {
+				gw-icon[iconKey="xmark"] {
+					display: inline-flex;
+				}
+				background-color: var(--invalid-text-background-color);
+			}
 		}
 	}
+}
+
+#secRight {
+	grid-area: r;
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	margin-inline: 5px;
 }
 
 form, article {
