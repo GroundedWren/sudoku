@@ -197,6 +197,20 @@ footer {
 			min-width: 50px;
 		}
 	}
+
+	table[aria-labelledby="sumSurroundings"] {
+		th, td {
+			border: 0;
+		}
+		th {
+			width: 0%;
+			word-break: keep-all;
+			padding-inline: 2px;
+		}
+		td {
+			padding-inline: 4px;
+		}
+	}
 }
 
 #clbPencil {

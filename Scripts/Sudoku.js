@@ -150,6 +150,18 @@ window.GW = window.GW || {};
 			).join("\n")}
 		`;
 
+		document.getElementById("tdRow").innerText = [...document.querySelectorAll(
+			`gw-cell[data-row="${formBoundCell.Row}"]`
+		)].map(cellEl => cellEl.getData().Number).filter(number => !!number).join(", ");
+
+		document.getElementById("tdCol").innerText = [...document.querySelectorAll(
+			`gw-cell[data-col="${formBoundCell.Col}"]`
+		)].map(cellEl => cellEl.getData().Number).filter(number => !!number).join(", ");
+
+		document.getElementById("tdSquare").innerText = [...document.querySelectorAll(
+			`gw-cell[data-squ="${formBoundCell.Square}"]`
+		)].map(cellEl => cellEl.getData().Number).filter(number => !!number).join(", ");
+
 		const spnLocked = document.getElementById("spnLocked");
 		if(cellData.Locked) {
 			spnLocked.classList.remove("hidden");
