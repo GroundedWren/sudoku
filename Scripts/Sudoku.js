@@ -115,9 +115,34 @@ window.GW = window.GW || {};
 	let formBoundCell = null;
 	function rebindCellForm(cell) {
 		formBoundCell = cell.querySelector(`gw-cell`);
+		cellData = formBoundCell.getData();
 		
 		document.getElementById("hCell").innerText = `Cell ${formBoundCell.Coords}`;
+
+		document.getElementById("olbValue").querySelector(`fieldset`).innerHTML = `
+			<legend style="display: none;">Value</legend>
+			${getAvailableNumbers().map(number =>
+				`<label>
+					<input type="radio" name="value" value="${number}" ${ number === cellData.Number ? "checked" : ""}>
+					${number}
+				</label>`
+			).join("\n")}
+		`;
 	}
 
-	ns.onCellFocus = () => {};
+	function getAvailableNumbers() {
+		return [1, 2, 3, 4, 5, 6, 7, 8, 9];
+	}
+
+	ns.saveBoundCell = () => {
+		const data = formBoundCell.getData();
+
+		const selectedValueBtn =  document.querySelector(`input[name="value"]:checked`);
+		if(selectedValueBtn) {
+			data.Number = parseInt(selectedValueBtn.value);
+		}
+		else {
+			data.Number = null;
+		}
+	};
 }) (window.GW.Sudoku = window.GW.Sudoku || {});

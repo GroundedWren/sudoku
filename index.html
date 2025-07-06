@@ -13,6 +13,7 @@
 	<script src="./Scripts/SwitchControl.js"></script>
 	<script src="./Scripts/ToasterControl.js"></script>
 	<script src="./Scripts/ActionBatcherGizmo.js"></script>
+	<script src="./Scripts/OptionListboxControl.js"></script>
 
 	<script src="./Scripts/Display.js"></script>
 	<script src="./Scripts/Sudoku.js"></script>
@@ -100,7 +101,11 @@
 		</gw-shortcuts>
 		<form id="frmCell" aria-labelledby="hCell" onsubmit="event.preventDefault();">
 			<h2 id="hCell">Cell S1-R1-C1</h2>
-			<p>Forthcoming!</p>
+			<gw-option-listbox id="olbValue">
+				<fieldset>
+					<legend style="display: none;">Value</legend>
+				</fieldset>
+			</gw-option-listbox>
 		</form>
 	</main>
 	<footer>
