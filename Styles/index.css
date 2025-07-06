@@ -96,6 +96,10 @@ body {
 		max-width: 1100px;
 		margin-inline: auto;
 		flex-grow: 1;
+
+		> button {
+			margin-inline: auto;
+		}
 	}
 }
 

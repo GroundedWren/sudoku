@@ -200,4 +200,8 @@ window.GW = window.GW || {};
 			}
 		`);
 	}
+
+	ns.checkValidity = () => {
+		GW.Controls.Toaster.showToast("TODO");
+	};
 }) (window.GW.Sudoku = window.GW.Sudoku || {});
