@@ -4,7 +4,7 @@
  */
 
 window.addEventListener("load", () => {
-	GW.Display.updatePrefs();
+	GW.Sudoku.Display.updatePrefs();
 
 	const shortsGame = document.getElementById("shortsGame");
 	shortsGame.addEventListener("focusin", GW.Sudoku.onGameFocusin);
@@ -16,6 +16,9 @@ window.addEventListener("load", () => {
 	const clbPencil = document.getElementById("clbPencil");
 	clbPencil.addEventListener("option-click", GW.Sudoku.saveBoundCell);
 
+	const numHints = parseInt(localStorage.getItem("num-hints")) || 38;
+	localStorage.setItem("num-hints", numHints);
+	document.getElementById("numHints").value = numHints;
 	GW.Sudoku.Data = JSON.parse(localStorage.getItem("data"));
 	if(!GW.Sudoku.Data) {
 		GW.Sudoku.generateGameData();

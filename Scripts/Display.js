@@ -4,7 +4,8 @@
  */
  
 window.GW = window.GW || {};
-(function Display(ns) {
+window.GW.Sudoku = window.GW.Sudoku || {};
+(function Generator(ns) {
 	ns.updatePrefs = function updatePrefs() {
 		const cbxDarkMode = document.getElementById("cbxDarkMode");
 		const theme = localStorage.getItem("theme");
@@ -26,4 +27,4 @@ window.GW = window.GW || {};
 		cbxShowCrosshairs.checked = !hideCrosshairs;
 		GW.Sudoku.applyCrosshairs();
 	}
-}) (window.GW.Display = window.GW.Display || {});
+}) (window.GW.Sudoku.Display = window.GW.Sudoku.Display || {});

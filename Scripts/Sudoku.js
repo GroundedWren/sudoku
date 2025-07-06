@@ -15,6 +15,7 @@ window.GW = window.GW || {};
 	};
 	ns.generateGameData = function generateGameData() {
 		ns.Data = [];
+		const numHints = parseInt(localStorage.getItem("num-hints"));
 
 		for(let i = 0; i < 9; i++) {
 			ns.Data[i] = [];

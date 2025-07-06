@@ -42,14 +42,14 @@
 					<label>
 						<gw-switch><input id="cbxDarkMode"
 							type="checkbox"
-							oninput="localStorage.setItem('theme', event.target.checked ? 'dark' : 'light');GW.Display.updatePrefs();"
+							oninput="localStorage.setItem('theme', event.target.checked ? 'dark' : 'light');GW.Sudoku.Display.updatePrefs();"
 						></gw-switch>
 						Dark mode
 					</label>
 					<label>
 						<gw-switch><input id="cbxShowCrosshairs"
 							type="checkbox"
-							oninput="localStorage.setItem('hide-crosshairs', event.target.checked ? 'false' : 'true');GW.Display.updatePrefs();"
+							oninput="localStorage.setItem('hide-crosshairs', event.target.checked ? 'false' : 'true');GW.Sudoku.Display.updatePrefs();"
 						></gw-switch>
 						Show crosshairs
 					</label>
@@ -268,7 +268,12 @@
 	<dialog id="diaNew">
 		<form aria-labelledby="hNew" onsubmit="GW.Sudoku.onNewGame(event);document.getElementById('diaNew').close();">
 			<h2 id="hNew">New Game</h2>
-			<p>Content here!</p>
+			<div class="input-grid">
+				<label>
+					<span>Hints:</span>
+					<input id="numHints" type="number" min="17" max="80" value="38" required autofocus="">
+				</label>
+			</div>
 			<footer>
 				<button type="submit">Begin</button>
 				<button type="button" onclick="document.getElementById('diaNew').close()">Cancel</button>
