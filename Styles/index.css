@@ -162,19 +162,31 @@ footer {
 	align-items: flex-end;
 }
 
-#frmCell fieldset {
+#frmCell  {
 	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	justify-content: space-around;
+	flex-direction: column;
+	gap: 4px;
 
-	[tabindex="-1"]:focus {
-		outline: none !important;
+	fieldset {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: space-around;
+
+		[tabindex="-1"]:focus {
+			outline: none !important;
+		}
+
+		[role="option"] {
+			min-height: 30px;
+			min-width: 50px;
+		}
 	}
+}
 
-	[role="option"] {
-		min-height: 30px;
-		min-width: 50px;
+#clbPencil {
+	legend svg {
+		display: none;
 	}
 }
 

@@ -130,14 +130,27 @@ window.GW = window.GW || {};
 			).join("\n")}
 		`;
 
+		const clbPencil = document.getElementById("clbPencil");
+		clbPencil.querySelector(`fieldset`).innerHTML = `
+			<legend>Pencil</legend>
+			${[1, 2, 3, 4, 5, 6, 7, 8, 9].map(number =>
+				`<label>
+					<input type="checkbox" value="${number}" ${ cellData.Pencil.includes(number) ? "checked" : ""}>
+					${number}
+				</label>`
+			).join("\n")}
+		`;
+
 		const spnLocked = document.getElementById("spnLocked");
 		if(cellData.Locked) {
 			spnLocked.classList.remove("hidden");
 			olbValue.classList.add("hidden");
+			clbPencil.classList.add("hidden");
 		}
 		else {
 			spnLocked.classList.add("hidden");
 			olbValue.classList.remove("hidden");
+			clbPencil.classList.remove("hidden");
 		}
 	}
 
@@ -151,5 +164,7 @@ window.GW = window.GW || {};
 		else {
 			data.Number = null;
 		}
+
+		data.Pencil = [...document.querySelectorAll(`#clbPencil input:checked`)].map(inputEl => parseInt(inputEl.value));
 	};
 }) (window.GW.Sudoku = window.GW.Sudoku || {});

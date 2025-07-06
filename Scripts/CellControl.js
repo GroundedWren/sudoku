@@ -59,15 +59,17 @@ window.GW = window.GW || {};
 			.top {
 				display: flex;
 				width: 100%;
+				padding-inline: 1px;
+				padding-block-start: 3px;
 
 				.pencil {
-					font-size: 0.45em;
+					font-size: 0.6em;
 				}
 
 				gw-icon[iconKey="lock"] {
 					.gw-icon {
-						width: 0.45em;
-						height: 0.45em;
+						width: 0.6em;
+						height: 0.6em;
 					}
 				}
 			}
@@ -269,7 +271,7 @@ window.GW = window.GW || {};
 			this.innerHTML = `
 				<div class="top">${data.Locked
 					? `<gw-icon iconKey="lock" title="Locked"></gw-icon>`
-					: `<div class="pencil"></div>`
+					: `<div class="pencil">${data.Pencil.join(", ")}</div>`
 				}</div>
 				<div data-number="${data.Number}" class="bkg">
 					<div class="num">${data.Number || ""}</div>
