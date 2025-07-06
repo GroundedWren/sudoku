@@ -119,8 +119,6 @@ window.GW = window.GW || {};
 					color: var(--cell-9-color);
 				}
 			}
-		}
-		td[aria-selected="true"] ${CellEl.Name} {
 			.diamond {
 				content: "";
 				display: inline-block;
@@ -128,6 +126,12 @@ window.GW = window.GW || {};
 				height: 0.45em;
 				transform: rotate(45deg);
 				border: 1px solid var(--border-color);
+				opacity: 0;
+			}
+		}
+		td[aria-selected="true"] ${CellEl.Name} {
+			.diamond {
+				opacity: 1;
 				background-color: var(--border-color);
 			}
 		}

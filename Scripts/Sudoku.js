@@ -45,7 +45,7 @@ window.GW = window.GW || {};
 			</table>`
 		).join("\n")}`;
 
-		rebindCellForm(secGame.querySelector(`td[aria-selected="true"]`));
+		rebindCell(secGame.querySelector(`td[aria-selected="true"]`));
 	};
 
 	const onRender = () => {
@@ -62,7 +62,7 @@ window.GW = window.GW || {};
 		const focusedCell = secGame.querySelector(`td:focus`);
 		focusedCell.setAttribute("aria-selected", "true");
 		focusedCell.setAttribute("tabindex", "0");
-		rebindCellForm(focusedCell);
+		rebindCell(focusedCell);
 	};
 
 	ns.onGameFocusout = () => {
@@ -113,15 +113,17 @@ window.GW = window.GW || {};
 	}
 
 	let formBoundCell = null;
-	function rebindCellForm(cell) {
+	function rebindCell(cell) {
 		const newCell = cell.querySelector(`gw-cell`);
 		if(formBoundCell === newCell) {
 			return;
 		}
-		
+
 		formBoundCell = newCell;
+		applyCrosshairs(formBoundCell);
+
 		cellData = formBoundCell.getData();
-		
+
 		document.getElementById("hCell").innerText = `Cell ${formBoundCell.Coords}`;
 
 		const olbValue = document.getElementById("olbValue");
@@ -182,4 +184,20 @@ window.GW = window.GW || {};
 
 		data.Pencil = [...document.querySelectorAll(`#clbPencil input:checked`)].map(inputEl => parseInt(inputEl.value));
 	};
+
+	const crosshairsStylesheet = new CSSStyleSheet();
+	document.adoptedStyleSheets.push(crosshairsStylesheet);
+	function applyCrosshairs(cell) {
+		crosshairsStylesheet.replaceSync(`
+			#secGame  {
+				gw-cell:is([data-row="${cell.Row}"], [data-col="${cell.Col}"], [data-squ="${cell.Square}"]) {
+					background-color: color-mix(in oklab, var(--selected-color), transparent 25%);
+
+					.diamond {
+						opacity: 1;
+					}
+				}
+			}
+		`);
+	}
 }) (window.GW.Sudoku = window.GW.Sudoku || {});
