@@ -125,6 +125,8 @@ window.GW = window.GW || {};
 		cellData = formBoundCell.getData();
 
 		document.getElementById("hCell").innerText = `Cell ${formBoundCell.Coords}`;
+		document.getElementById("pPosition").innerHTML = 
+			`<em>Row ${formBoundCell.Row + 1} Column ${formBoundCell.Col + 1}</em>`;
 
 		const olbValue = document.getElementById("olbValue");
 		olbValue.querySelector(`fieldset`).innerHTML = `

@@ -136,8 +136,11 @@
 				<span>(<kbd>Alt</kbd>+<kbd>S</kbd>)</span>
 			</aside>
 		</gw-shortcuts>
-		<form id="frmCell" aria-labelledby="hCell" onsubmit="event.preventDefault();">
-			<h2 id="hCell">Cell S1-R1-C1</h2>
+		<form id="frmCell" aria-labelledby="hCell" aria-describedby="pPosition" onsubmit="event.preventDefault();">
+			<hgroup>
+				<h2 id="hCell">Cell S1-R1-C1</h2>
+				<p id="pPosition"><em>Row 1 Column 1</em></p>
+			</hgroup>
 			<gw-option-listbox id="olbValue">
 				<fieldset>
 					<legend style="display: none;">Value</legend>

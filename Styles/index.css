@@ -171,6 +171,17 @@ footer {
 	flex-direction: column;
 	gap: 4px;
 
+	hgroup {
+		display: flex;
+		flex-direction: row;
+		gap: 5px;
+		justify-content: space-between;
+
+		p {
+			margin: 0;
+		}
+	}
+
 	fieldset {
 		display: flex;
 		flex-direction: row;
