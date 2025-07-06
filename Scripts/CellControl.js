@@ -275,10 +275,13 @@ window.GW = window.GW || {};
 			this.innerHTML = `
 				<div class="top">${data.Locked
 					? `<gw-icon iconKey="lock" title="Locked"></gw-icon>`
-					: `<div class="pencil">${data.Pencil.join(", ")}</div>`
+					: `<div class="pencil">
+						${data.Pencil.length ? `<span class="sr-only">Pencil selections:</span>` : ""}
+						${data.Pencil.join(", ")}</div>`
 				}</div>
 				<div data-number="${data.Number}" class="bkg">
-					<div class="num">${data.Number || ""}</div>
+					<span class="sr-only">Value:</span>
+					<div class="num">${data.Number || `<span class="sr-only">None</span>`}</div>
 				</div>
 				<div class="diamond"></div>
 			`;
