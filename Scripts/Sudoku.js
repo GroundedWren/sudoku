@@ -225,7 +225,7 @@ window.GW = window.GW || {};
 					background-color: color-mix(in oklab, var(--selected-color), transparent 25%);
 
 					.diamond {
-						opacity: 1;
+						opacity: 0.5;
 					}
 				}
 			}

@@ -14,6 +14,8 @@ window.GW = window.GW || {};
 		static Name = "gw-cell";
 		// Element CSS rules
 		static Style = `${CellEl.Name} {
+			cursor: pointer;
+
 			display: grid;
 			grid-template-rows: 0.45em 1fr 0.45em;
 			justify-items: center;
@@ -128,10 +130,16 @@ window.GW = window.GW || {};
 				border: 1px solid var(--border-color);
 				opacity: 0;
 			}
+
+			&:hover {
+				.diamond {
+					opacity: 1 !important;
+				}
+			}
 		}
 		td[aria-selected="true"] ${CellEl.Name} {
 			.diamond {
-				opacity: 1;
+				opacity: 1 !important;
 				background-color: var(--border-color);
 			}
 		}
