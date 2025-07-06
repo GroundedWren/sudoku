@@ -14,7 +14,110 @@ window.GW = window.GW || {};
 		static Name = "gw-cell";
 		// Element CSS rules
 		static Style = `${CellEl.Name} {
-		}`;
+			display: grid;
+			grid-template-rows: 0.45em 1fr 0.45em;
+			justify-items: center;
+
+			width: var(--cell-size);
+			height: var(--cell-size);
+
+			border-style: solid;
+			border-width: 0;
+			&:is([data-col="0"], [data-col="3"], [data-col="6"]) {
+				border-inline-start-color: var(--border-color);
+				border-inline-start-width: 3px;
+			}
+			&:is([data-col="1"], [data-col="4"], [data-col="7"]) {
+				border-inline-start-color: var(--border-color-2);
+				border-inline-start-width: 2px;
+			}
+			&:is([data-col="2"], [data-col="5"], [data-col="8"]) {
+				border-inline-start-color: var(--border-color-3);
+				border-inline-start-width: 2px;
+			}
+			&:is([data-col="8"]) {
+				border-inline-end-color: var(--border-color);
+				border-inline-end-width: 3px;
+			}
+			&:is([data-row="0"], [data-row="3"], [data-row="6"]) {
+				border-block-start-color: var(--border-color);
+				border-block-start-width: 3px;
+			}
+			&:is([data-row="1"], [data-row="4"], [data-row="7"]) {
+				border-block-start-color: var(--border-color-4);
+				border-block-start-width: 2px;
+			}
+			&:is([data-row="2"], [data-row="5"], [data-row="8"]) {
+				border-block-start-color: var(--border-color-5);
+				border-block-start-width: 2px;
+			}
+			&:is([data-row="8"]) {
+				border-block-end-color: var(--border-color);
+				border-block-end-width: 3px;
+			}
+
+			.pencil {
+				font-size: 0.45em;
+			}
+
+			.bkg {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+
+				aspect-ratio: 1 / 1;
+				border-radius: 20px;
+
+				&[data-number="1"] {
+					background-color: var(--cell-1-bkg-color);
+					color: var(--cell-1-color);
+				}
+				&[data-number="2"] {
+					background-color: var(--cell-2-bkg-color);
+					color: var(--cell-2-color);
+				}
+				&[data-number="3"] {
+					background-color: var(--cell-3-bkg-color);
+					color: var(--cell-3-color);
+				}
+				&[data-number="4"] {
+					background-color: var(--cell-4-bkg-color);
+					color: var(--cell-4-color);
+				}
+				&[data-number="5"] {
+					background-color: var(--cell-5-bkg-color);
+					color: var(--cell-5-color);
+				}
+				&[data-number="6"] {
+					background-color: var(--cell-6-bkg-color);
+					color: var(--cell-6-color);
+				}
+				&[data-number="7"] {
+					background-color: var(--cell-7-bkg-color);
+					color: var(--cell-7-color);
+				}
+				&[data-number="8"] {
+					background-color: var(--cell-8-bkg-color);
+					color: var(--cell-8-color);
+				}
+				&[data-number="9"] {
+					background-color: var(--cell-9-bkg-color);
+					color: var(--cell-9-color);
+				}
+			}
+		}
+		td[aria-selected="true"] ${CellEl.Name} {
+			.diamond {
+				content: "";
+				display: inline-block;
+				width: 0.45em;
+				height: 0.45em;
+				transform: rotate(45deg);
+				border: 1px solid var(--border-color);
+				background-color: var(--border-color);
+			}
+		}
+		`;
 
 		InstanceId; // Identifier for this instance of the element
 		IsInitialized; // Whether the element has rendered its content
@@ -47,11 +150,18 @@ window.GW = window.GW || {};
 			return head;
 		}
 
+		get Square() {
+			return parseInt(this.getAttribute("data-squ"));
+		}
 		get Row() {
 			return parseInt(this.getAttribute("data-row"));
 		}
 		get Col() {
 			return parseInt(this.getAttribute("data-col"));
+		}
+
+		get Coords() {
+			return `S${this.Square + 1}-R${this.Row  % 3 + 1}-C${this.Col % 3 + 1}`;
 		}
 
 		/**
@@ -144,7 +254,13 @@ window.GW = window.GW || {};
 
 		#doRender = () => {
 			const data = this.getData();
-			this.innerHTML = data.Number ? data.Number : "Null";
+			this.innerHTML = `
+				<div class="pencil"></div>
+				<div data-number="${data.Number}" class="bkg">
+					<div class="num">${data.Number || ""}</div>
+				</div>
+				<div class="diamond"></div>
+			`;
 		};
 	}
 	if(!customElements.get(ns.CellEl.Name)) {

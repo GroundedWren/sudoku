@@ -10,7 +10,7 @@ window.GW = window.GW || {};
 	ns.onNewGame = (event) => {
 		event.preventDefault();
 
-		generateGameData();
+		ns.generateGameData();
 		ns.renderGame();
 	};
 	ns.generateGameData = function generateGameData() {
@@ -19,7 +19,7 @@ window.GW = window.GW || {};
 		for(let i = 0; i < 9; i++) {
 			ns.Data[i] = [];
 			for(let j = 0; j < 9; j++) {
-				ns.Data[i][j] = { Number: null, Locked: false };
+				ns.Data[i][j] = { Number: null, Locked: false, Pencil: [] };
 			}
 		}
 	}
@@ -32,9 +32,11 @@ window.GW = window.GW || {};
 			`<table role="grid" aria-labelledby="spnSquareLbl-${squareIdx + 1}">
 				<tbody>${[0, 1, 2].map(rowIdx =>
 					`<tr>${[0, 1, 2].map(colIdx => 
-						`<td><gw-cell
-							aria-selected="false"
-							tabindex="${!squareIdx && !rowIdx && !colIdx ? "0" : "-1"}"
+						`<td
+							aria-selected=${!squareIdx && !rowIdx && !colIdx ? "true" : "false"}
+							tabindex=${!squareIdx && !rowIdx && !colIdx ? "0" : "-1"}
+						><gw-cell
+							data-squ="${squareIdx}"
 							data-row="${Math.floor(squareIdx / 3) * 3 + rowIdx}"
 							data-col="${(squareIdx % 3) * 3 + colIdx}"
 						></gw-cell></td>`).join("\n")}
@@ -42,6 +44,8 @@ window.GW = window.GW || {};
 				</tbody>
 			</table>`
 		).join("\n")}`;
+
+		rebindCellForm(secGame.querySelector(`td[aria-selected="true"]`));
 	};
 
 	const onRender = () => {
@@ -51,11 +55,11 @@ window.GW = window.GW || {};
 	ns.onGameFocusin = () => {
 		document.getElementById("asiGame").style["visibility"] = "visible";
 
-		const prevCell = secGame.querySelector(`gw-cell[aria-selected="true"]`);
+		const prevCell = secGame.querySelector(`td[aria-selected="true"]`);
 		prevCell?.setAttribute("aria-selected", "false");
 		prevCell?.setAttribute("tabindex", "-1");
 
-		const focusedCell = secGame.querySelector(`gw-cell:focus`);
+		const focusedCell = secGame.querySelector(`td:focus`);
 		focusedCell.setAttribute("aria-selected", "true");
 		focusedCell.setAttribute("tabindex", "0");
 		rebindCellForm(focusedCell);
@@ -66,7 +70,7 @@ window.GW = window.GW || {};
 	};
 
 	ns.onGameKbdNav = (event) => {
-		const currentCell = document.querySelector(`gw-cell[aria-selected="true"]`);
+		const currentCell = document.querySelector(`td[aria-selected="true"] gw-cell`);
 		let row = currentCell.Row;
 		let col = currentCell.Col;
 
@@ -103,13 +107,16 @@ window.GW = window.GW || {};
 	};
 
 	function focusGameCell(rowIdx, colIdx) {
-		document.querySelector(`gw-cell[data-row="${rowIdx}"][data-col="${colIdx}"]`).focus();
+		document.querySelector(
+			`td:has([data-row="${rowIdx}"][data-col="${colIdx}"])`
+		).focus();
 	}
 
 	let formBoundCell = null;
 	function rebindCellForm(cell) {
-		formBoundCell = cell;
-		//Update UI
+		formBoundCell = cell.querySelector(`gw-cell`);
+		
+		document.getElementById("hCell").innerText = `Cell ${formBoundCell.Coords}`;
 	}
 
 	ns.onCellFocus = () => {};
