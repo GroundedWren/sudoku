@@ -84,6 +84,8 @@ window.GW = window.GW || {};
 				aspect-ratio: 1 / 1;
 				border-radius: 20px;
 
+				height: 100%;
+
 				&[data-number="1"] {
 					background-color: var(--cell-1-bkg-color);
 					color: var(--cell-1-color);
