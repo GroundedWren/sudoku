@@ -114,7 +114,12 @@ window.GW = window.GW || {};
 
 	let formBoundCell = null;
 	function rebindCellForm(cell) {
-		formBoundCell = cell.querySelector(`gw-cell`);
+		const newCell = cell.querySelector(`gw-cell`);
+		if(formBoundCell === newCell) {
+			return;
+		}
+		
+		formBoundCell = newCell;
 		cellData = formBoundCell.getData();
 		
 		document.getElementById("hCell").innerText = `Cell ${formBoundCell.Coords}`;
@@ -152,6 +157,16 @@ window.GW = window.GW || {};
 			olbValue.classList.remove("hidden");
 			clbPencil.classList.remove("hidden");
 		}
+	}
+
+	ns.quickSelect = (value) => {
+		if(formBoundCell.getData().Locked) {
+			return;
+		}
+
+		const radValue = document.querySelector(`input[name="value"][value="${value}"]`);
+		radValue.checked = !radValue.checked;
+		ns.saveBoundCell();
 	}
 
 	ns.saveBoundCell = () => {
