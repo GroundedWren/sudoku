@@ -19,7 +19,7 @@ window.GW = window.GW || {};
 		for(let i = 0; i < 9; i++) {
 			ns.Data[i] = [];
 			for(let j = 0; j < 9; j++) {
-				ns.Data[i][j] = { Number: null, Locked: false, Pencil: [] };
+				ns.Data[i][j] = { Number: null, Locked: false, Pencil: [], Invalid: false };
 			}
 		}
 	}
@@ -207,6 +207,8 @@ window.GW = window.GW || {};
 
 		data.Number = parseInt(document.getElementById("olbValue").Value) || null;
 		data.Pencil = document.getElementById("clbPencil").Value.map(valStr => parseInt(valStr));
+
+		ns.clearInvalidFlags();
 	};
 
 	const crosshairsStylesheet = new CSSStyleSheet();
@@ -225,7 +227,38 @@ window.GW = window.GW || {};
 		`);
 	}
 
-	ns.checkValidity = () => {
-		GW.Controls.Toaster.showToast("TODO");
+	ns.checkUIValidity = () => {
+		let isValid = true;
+		["squ", "row", "col"].forEach(axis => {
+			[0, 1, 2, 3, 4, 5, 6, 7, 8].forEach(idx => {
+				const dataAry = [...document.querySelectorAll(
+					`gw-cell[data-${axis}="${idx}"]`
+				)].map(cellEl => cellEl.getData());
+				const hadDups = detectAndMarkDuplicates(dataAry);
+				isValid = isValid && !hadDups;
+			});
+		});
+		if(!isValid) {
+			GW.Controls.Toaster.showToast("Invalid cells detected 😖");
+			return;
+		}
+		let isComplete = [...document.querySelectorAll(`#artNumbers span[data-valid="true"]`)].length === 9;
+		GW.Controls.Toaster.showToast(`Puzzle is valid 👍 ${isComplete ? "but incomplete 🤔" : "and complete 🥳"}`);
 	};
+	function detectAndMarkDuplicates(dataAry) {
+		const dataBuckets = dataAry.reduce((buckets, cellData) => {
+			if(cellData.Number !== null) {
+				buckets[cellData.Number] = buckets[cellData.Number] || [];
+				buckets[cellData.Number].push(cellData);
+			}
+			return buckets;
+		}, {});
+		const duplicateBuckets = Object.values(dataBuckets).filter(bucket => bucket.length > 1);
+		duplicateBuckets.forEach(dupBucket => dupBucket.forEach(cellData => cellData.Invalid = true));
+		return duplicateBuckets.length > 0;
+	}
+
+	ns.clearInvalidFlags = function clearInvalidFlags() {
+		ns.Data.forEach(rowData => rowData.forEach(cellData => cellData.Invalid = false));
+	}
 }) (window.GW.Sudoku = window.GW.Sudoku || {});

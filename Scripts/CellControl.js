@@ -277,8 +277,9 @@ window.GW = window.GW || {};
 					? `<gw-icon iconKey="lock" title="Locked"></gw-icon>`
 					: `<div class="pencil">
 						${data.Pencil.length ? `<span class="sr-only">Pencil selections:</span>` : ""}
-						${data.Pencil.join(", ")}</div>`
-				}</div>
+						${data.Pencil.join(", ")}</div>`}
+					${data.Invalid ? `<gw-icon iconKey="xmark" title="Invalid"></gw-icon>` : ""}
+				</div>
 				<div data-number="${data.Number}" class="bkg">
 					<span class="sr-only">Value:</span>
 					<div class="num">${data.Number || `<span class="sr-only">None</span>`}</div>

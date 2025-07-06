@@ -20,5 +20,6 @@ window.addEventListener("load", () => {
 	if(!GW.Sudoku.Data) {
 		GW.Sudoku.generateGameData();
 	}
+	GW.Sudoku.clearInvalidFlags();
 	GW.Sudoku.renderGame();
 });
