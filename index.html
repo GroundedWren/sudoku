@@ -287,6 +287,47 @@
 				<p>
 					Welcome to the Grounded Wren Sudoku player!
 				</p>
+				<p>
+					Sudoku is an incredibly popular game that was created by Howard Garns in the 1970s and popularized by Wayne Gould's puzzle generator in the early 2000s, bookstores, newspapers, and the internet alike are awash with Sudoku puzzles.
+				</p>
+				<h2>Accessible Sudoku</h2>
+				<p>
+					There are a lot of Sudoku players out there, some are pretty accessible, and others are extremely not. 
+				</p>
+				<p>
+					Sudoku strikes me as something that'd be very natural to optimize for keyboard navigation and screen readers, so I decided to give it a go here.
+				</p>
+				<h2>Gameplay Basics</h2>
+				<p>
+					A Sudoku game is a nine by nine grid devided into nine three by three squares. The goal of Sudoku, starting with a partially-filled grid, is to fill in the remainder of the cells with numbers one to nine while preserving a valid game state.
+				</p>
+				<p>
+					For a Sudoku game to be valid, the following must be true:
+				</p>
+				<ul>
+					<li>Each row must only contain one of each number.</li>
+					<li>Each column must only contain one of each number.</li>
+					<li>Each three by three square must only contain one of each number.</li>
+				</ul>
+				<p>
+					That's basically it, but Sudoku can require a fair amount of logical deduction to solve.
+				</p>
+				<h2>This Game</h2>
+				<p>
+					I've implemented my Sudoku grid as a set of nine <a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles/grid_role">grid</a> widgets, one for each square. They're bound together by an <a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles/application_role">application</a> widget which handles keyboard navigation and interaction.
+				</p>
+				<p>
+					I opted to use multiple grids instead of one so that each could be discretely named and clearly deliniated. The <q>true</q> row and column position is available in the Cell form below the application.
+				</p>
+				<p>
+					The surroundings of a selected cell may also be reviewed from the Cell form. This can be easier than trying to scan through the table.
+				</p>
+				<p>
+					Penciling in values has no effect on the overall game state, it's is only for your convenience.
+				</p>
+				<p>
+					When you're done, click <q>Check Validity</q> to see if your solution is correct. Like with my <a href="https://minesweeper.groundedwren.com/">Minesweeper clone</a>, the game state is saved to your browser, so you can leave and come back any time.
+				</p>
 			</article>
 			<footer>
 				<a class="full" href="mailto:vera@groundedwren.com?subject=Sudoku">Give feedback</a>
