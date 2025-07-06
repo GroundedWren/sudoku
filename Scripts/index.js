@@ -10,6 +10,9 @@ window.addEventListener("load", () => {
 	shortsGame.addEventListener("focusin", GW.Sudoku.onGameFocusin);
 	shortsGame.addEventListener("focusout", GW.Sudoku.onGameFocusout);
 
+	shortsGame.addEventListener("mousedown", GW.Sudoku.onGameMousedown);
+	document.addEventListener("mouseup", GW.Sudoku.onDocMouseup);
+
 	const olbValue = document.getElementById("olbValue");
 	olbValue.addEventListener("option-click", GW.Sudoku.saveBoundCell);
 

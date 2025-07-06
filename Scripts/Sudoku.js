@@ -36,6 +36,7 @@ window.GW = window.GW || {};
 						`<td
 							aria-selected=${!squareIdx && !rowIdx && !colIdx ? "true" : "false"}
 							tabindex=${!squareIdx && !rowIdx && !colIdx ? "0" : "-1"}
+							class="sudoku"
 						><gw-cell
 							data-squ="${squareIdx}"
 							data-row="${Math.floor(squareIdx / 3) * 3 + rowIdx}"
@@ -73,15 +74,48 @@ window.GW = window.GW || {};
 	ns.onGameFocusin = () => {
 		document.getElementById("asiGame").style["visibility"] = "visible";
 
+		if(tdWaitingForPointer) {
+			return;
+		}
 		const prevCell = secGame.querySelector(`td[aria-selected="true"]`);
 		prevCell?.setAttribute("aria-selected", "false");
 		prevCell?.setAttribute("tabindex", "-1");
+		prevCell?.classList.remove("moused");
 
-		const focusedCell = secGame.querySelector(`td:focus`);
+		const focusedCell = secGame.querySelector(`td:focus`) || prevCell;
 		focusedCell.setAttribute("aria-selected", "true");
 		focusedCell.setAttribute("tabindex", "0");
 		rebindCell(focusedCell);
 	};
+
+	let tdWaitingForPointer = null;
+	ns.onGameMousedown = (event) => {
+		tdWaitingForPointer = getParentSudokuTd(event.target);
+		event.preventDefault();
+	};
+	ns.onDocMouseup = (event) => {
+		const thisTd = getParentSudokuTd(event.target);
+		if(thisTd && thisTd === tdWaitingForPointer) {
+			tdWaitingForPointer = null;
+			thisTd.focus();
+			ns.onGameFocusin();
+			thisTd.classList.add("moused");
+		}
+		else if (thisTd) {
+			tdWaitingForPointer = null;
+			document.querySelector(`td.sudoku[aria-selected="true"]`).focus();
+		}
+		else {
+			tdWaitingForPointer = null;
+		}
+	};
+	function getParentSudokuTd(elem) {
+		let tdEl = elem;
+		while(tdEl && tdEl.tagName !== "TD" && !tdEl.classList.contains("sudoku")) {
+			tdEl = tdEl.parentElement;
+		}
+		return tdEl;
+	}
 
 	ns.onGameFocusout = () => {
 		document.getElementById("asiGame").style["visibility"] = "hidden";

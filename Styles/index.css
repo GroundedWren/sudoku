@@ -146,6 +146,9 @@ footer {
 		td {
 			padding: 0;
 			border: 0;
+			&.moused {
+				outline: 0 !important;
+			}
 		}
 
 		&[aria-labelledby$="1"] {
