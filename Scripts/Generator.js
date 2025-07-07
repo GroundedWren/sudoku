@@ -10,8 +10,7 @@ window.GW = window.GW || {};
 		setup(cellSet);
 		singleSolve(cellSet);
 
-		const cellArray = Array.from(cellSet);
-		cellArray.sort(() => Math.random() - 0.5);
+		const cellArray = shuffleArray(Array.from(cellSet));
 		for(let i = (numHints-1); i < 81; i++) {
 			cellArray[i].Value = null;
 		}
@@ -31,7 +30,7 @@ window.GW = window.GW || {};
 					Row: row,
 					Col: col,
 					Value: null,
-					Choices: [1, 2, 3, 4, 5, 6, 7, 8, 9].sort(() => Math.random() - 0.5),
+					Choices: shuffleArray([1, 2, 3, 4, 5, 6, 7, 8, 9]),
 					Blocks: {
 						1: 0,
 						2: 0,
@@ -114,5 +113,18 @@ window.GW = window.GW || {};
 
 	function getOptions(cellObj) {
 		return cellObj.Choices.filter(option => !cellObj.Blocks[option]);
+	}
+
+	function shuffleArray(ary) {
+		const valAry = ary.reduce((valAry, aryItm) => {
+			const valObj = {
+				Value: Math.random(),
+				Item: aryItm
+			};
+			valAry.push(valObj);
+			return valAry;
+		}, []);
+		valAry.sort((a, b) => a.Value - b.Value);
+		return valAry.map(valObj => valObj.Item);
 	}
 }) (window.GW.Sudoku.Generator = window.GW.Sudoku.Generator || {});
