@@ -109,12 +109,14 @@ window.GW = window.GW || {};
 			return accu;
 		}, {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0});
 
-		Object.entries(numberCounts).forEach(([number, count]) => {
-			const spnPlaced = document.getElementById(`spn${number}Placed`);
-			spnPlaced.innerText = count;
-			spnPlaced.setAttribute("data-valid", count === 9);
-			spnPlaced.setAttribute("data-invalid", count > 9);
-		});
+		document.getElementById("olNumbers").innerHTML = Object.values(numberCounts).reduce((accu, count) => {
+			accu += `<li><figure>
+						<span>${count}&nbsp;/&nbsp;9</span>
+						${count === 9 ? `<gw-icon iconKey="check" name="Valid"></gw-icon>` : ""}
+						${count > 9 ? `<gw-icon iconKey="xmark" name="Invalid"></gw-icon>` : ""}
+					</figure></li>`;
+			return accu;
+		}, "");
 	};
 
 	ns.onGameFocusin = () => {
@@ -339,7 +341,7 @@ window.GW = window.GW || {};
 			GW.Controls.Toaster.showToast("Invalid cells detected 😖");
 			return;
 		}
-		let isComplete = [...document.querySelectorAll(`#artNumbers span[data-valid="true"]`)].length === 9;
+		let isComplete = [...document.querySelectorAll(`gw-cell [data-number="null"]`)].length === 0;
 		GW.Controls.Toaster.showToast(`Puzzle is valid 👍 ${isComplete ? "and complete 🥳" : "but incomplete 🤔" }`);
 	};
 	function detectAndMarkDuplicates(dataAry) {

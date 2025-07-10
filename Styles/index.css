@@ -308,24 +308,15 @@ footer {
 			padding-inline: 4px;
 			border-radius: 20px;
 
-			> span {
+			> figure {
 				display: inline-flex;
+				margin: 0;
 			}
 
-			gw-icon {
-				display: none;
-			}
-
-			&:has([data-valid="true"]) {
-				gw-icon[iconKey="check"] {
-					display: inline-flex;
-				}
+			&:has(gw-icon[iconKey="check"]) {
 				background-color: var(--mark-color);
 			}
-			&:has([data-invalid="true"]) {
-				gw-icon[iconKey="xmark"] {
-					display: inline-flex;
-				}
+			&:has(gw-icon[iconKey="xmark"]) {
 				background-color: var(--invalid-text-background-color);
 			}
 		}
