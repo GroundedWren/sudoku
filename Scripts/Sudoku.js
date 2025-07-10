@@ -33,6 +33,9 @@ window.GW = window.GW || {};
 	}
 
 	ns.renderGame = function renderGame() {
+		Last.Data = [];
+		localStorage.removeItem("data");
+
 		ns.CellEl.ActionBatcher.addListener("onRender", onRender);
 
 		const secGame = document.getElementById("secGame");
@@ -57,7 +60,43 @@ window.GW = window.GW || {};
 		rebindCell(secGame.querySelector(`td[aria-selected="true"]`));
 	};
 
+	const Last = new Proxy({Data: []}, {
+		set(_target, property, value, _receiver) {
+			switch(property) {
+				case "Data":
+					const btnUndo = document.getElementById("btnUndo");
+					if(value && value.length) {
+						btnUndo.removeAttribute("disabled");
+					}
+					else {
+						btnUndo.setAttribute("disabled", "true");
+					}
+					break;
+			}
+			return Reflect.set(...arguments);
+		}
+	});
+
+	ns.undo = () => {
+		if(!Last.Data || !Last.Data.length) {
+			return;
+		}
+
+		ns.Data = Last.Data;
+
+		const activeCell = document.getElementById("secGame").querySelector(`td[aria-selected="true"] gw-cell`);
+		ns.CellEl.ActionBatcher.addListener("afterUndo", () => {
+			document.querySelector(
+				`#secGame td:has([data-squ="${activeCell.Square}"][data-row="${activeCell.Row}"][data-col="${activeCell.Col}"])`
+			).focus();
+			GW.Controls.Toaster.showToast("Action undone", {invisible: true});
+			ns.CellEl.ActionBatcher.removeListener("afterUndo");
+		});
+		ns.renderGame();
+	};
+
 	const onRender = () => {
+		Last.Data = JSON.parse(localStorage.getItem("data"));
 		localStorage.setItem("data", JSON.stringify(ns.Data));
 
 		const numberCounts = ns.Data.reduce((accu, rowAry) => {
@@ -84,6 +123,8 @@ window.GW = window.GW || {};
 		if(tdWaitingForPointer) {
 			return;
 		}
+		const secGame = document.getElementById("secGame");
+
 		const prevCell = secGame.querySelector(`td[aria-selected="true"]`);
 		prevCell?.setAttribute("aria-selected", "false");
 		prevCell?.setAttribute("tabindex", "-1");

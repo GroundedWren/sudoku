@@ -200,6 +200,10 @@
 			code_26="Alt+9"
 			handler_26="GW.Sudoku.quickPencil(9)"
 			info_26="Quick pencil 9"
+
+			code_27="Control+Z"
+			handler_27="GW.Sudoku.undo()"
+			info_27="Undo"
 		>
 			<section id="secGame"></section>
 			<aside id="asiGame" style="visibility: hidden;">
@@ -305,6 +309,7 @@
 				</ol>
 			</article>
 			<button id="btnValid" onclick="GW.Sudoku.checkUIValidity();">Check Validity</button>
+			<button id="btnUndo" onclick="GW.Sudoku.undo();">Undo</button>
 		</section>
 	</main>
 	<footer>
