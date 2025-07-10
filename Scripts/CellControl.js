@@ -62,13 +62,14 @@ window.GW = window.GW || {};
 				display: flex;
 				width: 100%;
 				padding-inline: 1.5px;
-				padding-block-start: 3px;
+				justify-content: space-between;
 
 				.pencil {
 					font-size: 0.6em;
 				}
 
 				gw-icon[iconKey="lock"] {
+					padding-block-start: 3px;
 					.gw-icon {
 						width: 0.6em;
 						height: 0.6em;
