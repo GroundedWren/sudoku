@@ -244,6 +244,16 @@ window.GW = window.GW || {};
 		ns.saveBoundCell();
 	}
 
+	ns.quickPencil = (value) => {
+		if(formBoundCell.getData().Locked) {
+			return;
+		}
+
+		const chkValue = document.querySelector(`#clbPencil input[value="${value}"]`);
+		chkValue.click();
+		ns.saveBoundCell();
+	};
+
 	ns.saveBoundCell = () => {
 		const data = formBoundCell.getData();
 
