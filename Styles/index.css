@@ -9,11 +9,18 @@ File Description: Index.html styles
 }
 @media (max-width: 600px) {
 	:root {
-		--cell-size: 40px;
+		--cell-size: 42.5px;
 	}
 }
 
 @media (max-width: 400px) {
+	:root {
+		--cell-size: 37.5px;
+		font-size: 0.9em;
+	}
+}
+
+@media (max-width: 350px) {
 	:root {
 		--cell-size: 35px;
 		font-size: 0.8em;
