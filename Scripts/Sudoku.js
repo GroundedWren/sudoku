@@ -10,7 +10,10 @@ window.GW = window.GW || {};
 	ns.onNewGame = (event) => {
 		event.preventDefault();
 
-		ns.generateGameData();
+		const numHints = document.getElementById("numHints").value;
+		localStorage.setItem("num-hints", numHints);
+
+		ns.generateGameData(numHints);
 		ns.renderGame();
 	};
 	ns.generateGameData = function generateGameData() {

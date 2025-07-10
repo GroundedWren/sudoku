@@ -11,7 +11,7 @@ window.GW = window.GW || {};
 		singleSolve(cellSet);
 
 		const cellArray = shuffleArray(Array.from(cellSet));
-		for(let i = (numHints-1); i < 81; i++) {
+		for(let i = numHints; i < 81; i++) {
 			cellArray[i].Value = null;
 		}
 
