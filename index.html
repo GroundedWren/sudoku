@@ -41,6 +41,13 @@
 				</summary>
 				<div class="bubble">
 					<label>
+						<gw-switch><input id="cbxAutoValidate"
+							type="checkbox"
+							oninput="localStorage.setItem('auto-validate', event.target.checked ? 'true' : 'false');GW.Sudoku.Display.updatePrefs();"
+						></gw-switch>
+						Auto-validate
+					</label>
+					<label>
 						<gw-switch><input id="cbxDarkMode"
 							type="checkbox"
 							oninput="localStorage.setItem('theme', event.target.checked ? 'dark' : 'light');GW.Sudoku.Display.updatePrefs();"
@@ -253,7 +260,7 @@
 				<h2 id="hNumbers">Numbers Placed</h2>
 				<ol id="olNumbers" aria-labelledby="hNumbers"></ol>
 			</article>
-			<button id="btnValid" onclick="GW.Sudoku.checkUIValidity();">Check Validity</button>
+			<button id="btnValid" onclick="GW.Sudoku.onCheckValidity();">Check Validity</button>
 			<button id="btnUndo" onclick="GW.Sudoku.undo();">Undo</button>
 		</section>
 	</main>

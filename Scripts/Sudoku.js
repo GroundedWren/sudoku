@@ -99,9 +99,6 @@ window.GW = window.GW || {};
 	};
 
 	const onRender = () => {
-		Last.Data = JSON.parse(localStorage.getItem("data"));
-		localStorage.setItem("data", JSON.stringify(ns.Data));
-
 		const numberCounts = ns.Data.reduce((accu, rowAry) => {
 			accu = rowAry.reduce((accu, cellObj) => {
 				if(cellObj.Number !== null) {
@@ -120,7 +117,31 @@ window.GW = window.GW || {};
 					</figure></li>`;
 			return accu;
 		}, "");
+
+		if(ns.AutoValidate) {
+			doAutoValidate();
+		}
+		else {
+			Last.Data = JSON.parse(localStorage.getItem("data"));
+			localStorage.setItem("data", JSON.stringify(ns.Data));
+		}
 	};
+
+	function doAutoValidate() {
+		ns.AutoValidate = false;
+		const {isValid, isComplete} = checkUIValidity();
+		ns.CellEl.ActionBatcher.run("AutoValidate", async () => {
+			await ns.CellEl.ActionBatcher.BatchPromise;
+			ns.AutoValidate = true
+		});
+
+		if(isValid && isComplete) {
+			GW.Controls.Toaster.showToast(`Puzzle is valid 👍 and complete 🥳`);
+		}
+		if(!isValid) {
+			GW.Controls.Toaster.showToast("Invalid cells detected 😖");
+		}
+	}
 
 	ns.onGameFocusin = () => {
 		document.getElementById("asiGame").style["visibility"] = "visible";
@@ -329,7 +350,19 @@ window.GW = window.GW || {};
 		`);
 	}
 
-	ns.checkUIValidity = () => {
+	ns.onCheckValidity = () => {
+		const {isValid, isComplete} = checkUIValidity();
+		if(!isValid) {
+			GW.Controls.Toaster.showToast("Invalid cells detected 😖");
+			return;
+		}
+		GW.Controls.Toaster.showToast(`Puzzle is valid 👍 ${isComplete 
+			? "and complete 🥳" 
+			: "but incomplete 🤔"
+		}`);
+	};
+
+	function checkUIValidity() {
 		let isValid = true;
 		["squ", "row", "col"].forEach(axis => {
 			[0, 1, 2, 3, 4, 5, 6, 7, 8].forEach(idx => {
@@ -340,13 +373,10 @@ window.GW = window.GW || {};
 				isValid = isValid && !hadDups;
 			});
 		});
-		if(!isValid) {
-			GW.Controls.Toaster.showToast("Invalid cells detected 😖");
-			return;
-		}
 		let isComplete = [...document.querySelectorAll(`gw-cell [data-number="null"]`)].length === 0;
-		GW.Controls.Toaster.showToast(`Puzzle is valid 👍 ${isComplete ? "and complete 🥳" : "but incomplete 🤔" }`);
-	};
+
+		return {isValid, isComplete};
+	}
 	function detectAndMarkDuplicates(dataAry) {
 		const dataBuckets = dataAry.reduce((buckets, cellData) => {
 			if(cellData.Number !== null) {

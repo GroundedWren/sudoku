@@ -7,6 +7,10 @@ window.GW = window.GW || {};
 window.GW.Sudoku = window.GW.Sudoku || {};
 (function Generator(ns) {
 	ns.updatePrefs = function updatePrefs() {
+		const cbxAutoValidate = document.getElementById("cbxAutoValidate");
+		GW.Sudoku.AutoValidate = localStorage.getItem("auto-validate") !== "false";
+		cbxAutoValidate.checked = GW.Sudoku.AutoValidate;
+		
 		const cbxDarkMode = document.getElementById("cbxDarkMode");
 		const theme = localStorage.getItem("theme");
 		switch(theme) {
