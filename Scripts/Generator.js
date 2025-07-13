@@ -5,17 +5,11 @@
  
 window.GW = window.GW || {};
 (function Display(ns) {
-	ns.generateGame = function generateGame(numHints) {
+	ns.generateGame = function generateGame(numHints, doHardMode) {
 		const cellSet = new Set();
 		setup(cellSet);
 		singleSolve(cellSet);
-
-		const cellArray = shuffleArray(Array.from(cellSet));
-		for(let i = numHints; i < 81; i++) {
-			cellArray[i].Value = null;
-		}
-
-		return cellArray;
+		return doHardMode ? reduceSimple(cellSet, numHints) : reduceComplex(cellSet, numHints);
 	};
 
 	function setup(cellSet) {
@@ -31,17 +25,10 @@ window.GW = window.GW || {};
 					Col: col,
 					Value: null,
 					Choices: shuffleArray([1, 2, 3, 4, 5, 6, 7, 8, 9]),
-					Blocks: {
-						1: 0,
-						2: 0,
-						3: 0,
-						4: 0,
-						5: 0,
-						6: 0,
-						7: 0,
-						8: 0,
-						9: 0,
-					},
+					Blocks: [1, 2, 3, 4, 5, 6, 7, 8, 9].reduce((accu, val) => {
+						accu[val] = 0;
+						return accu;
+					}, {}),
 					TryIdx: 0,
 					Links: new Set()
 				};
@@ -94,21 +81,60 @@ window.GW = window.GW || {};
 				cell.TryIdx = 0;
 				unsolvedCells.unshift(cell);
 				const solCell = solvedCells.shift();
-				solCell.Links.forEach(linkCell => {
-					linkCell.Blocks[solCell.Value] = Math.max(0, linkCell.Blocks[solCell.Value]) - 1
-				});
-				solCell.Value = null;
+				setCellValue(solCell, null);
 				solCell.TryIdx += 1;
 				unsolvedCells.unshift(solCell);
 			}
 			else {
-				cell.Value = options[cell.TryIdx];
-				cell.Links.forEach(linkCell => {
-					linkCell.Blocks[cell.Value] = linkCell.Blocks[cell.Value] + 1;
-				});
+				setCellValue(cell, options[cell.TryIdx]);
 				solvedCells.unshift(cell);
 			}
 		}
+	}
+
+	function reduceSimple(cellSet, numHints) {
+		const cellArray = shuffleArray(Array.from(cellSet));
+		for(let i = numHints; i < 81; i++) {
+			cellArray[i].Value = null;
+		}
+
+		return cellArray;
+	}
+
+	function reduceComplex(cellSet, numHints) {
+		const solCells = shuffleArray(Array.from(cellSet));
+		solCells.forEach(cell => cell.TrueValue = cell.Value);
+
+		const delCells = [];
+		let tryIdx = 0;
+		while(solCells.length > numHints) {
+			if(tryIdx >= solCells.length) {
+				const delCell = delCells.shift();
+				setCellValue(delCell, delCell.TrueValue);
+				solCells.splice(delCell.TryIdx, 0, delCell);
+				tryIdx = delCell.TryIdx + 1;
+			}
+			else {
+				const solCell = solCells.splice(tryIdx, 1)[0];
+				solCell.TryIdx = tryIdx;
+				setCellValue(solCell, null);
+				if(isSingleSolution(cellSet)) {
+					delCells.unshift(solCell);
+					tryIdx = 0;
+				}
+				else {
+					solCells.splice(tryIdx, 0, solCell);
+					setCellValue(solCell, solCell.TrueValue);
+					tryIdx += 1;
+				}
+			}
+		}
+
+		return Array.from(cellSet);
+	}
+
+	function isSingleSolution(cellSet) {
+		return true; //todo
 	}
 
 	function getOptions(cellObj) {
@@ -126,5 +152,15 @@ window.GW = window.GW || {};
 		}, []);
 		valAry.sort((a, b) => a.Value - b.Value);
 		return valAry.map(valObj => valObj.Item);
+	}
+
+	function setCellValue(cell, value) {
+		const oldValue = cell.Value;
+		cell.Value = value;
+		cell.Links.forEach(linkCell => {
+			linkCell.Blocks[oldValue ?? value] = (value === null)
+				? Math.max(0, linkCell.Blocks[oldValue]) - 1
+				: linkCell.Blocks[value] + 1;
+		});
 	}
 }) (window.GW.Sudoku.Generator = window.GW.Sudoku.Generator || {});

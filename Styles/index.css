@@ -361,9 +361,26 @@ form, article {
 			text-align: end;
 			display: contents;
 
-			&:has(:focus-visible) {
+			&:has(input[type="checkbox"]) {
+				&:has(:focus) {
+					&::before {
+						background-color: var(--mark-color);
+					}
+				}
+				&::before {
+					content: "";
+
+				}
 				> span {
-					background-color: var(--selected-color);
+					&:has(input:checked) {
+						background-color: var(--selected-color);
+					}
+				}
+			}
+
+			&:has(:focus) {
+				> span {
+					background-color: var(--mark-color);
 				}
 				input {
 					outline-width: 2px !important;

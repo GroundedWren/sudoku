@@ -13,7 +13,7 @@ window.GW = window.GW || {};
 		const numHints = document.getElementById("numHints").value;
 		localStorage.setItem("num-hints", numHints);
 
-		ns.generateGameData(numHints);
+		ns.generateGameData(numHints, document.getElementById("cbxGenHardMode").checked);
 		ns.renderGame();
 	};
 	ns.generateGameData = function generateGameData() {
