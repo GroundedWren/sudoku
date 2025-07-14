@@ -424,6 +424,11 @@ dialog {
 		gap: 5px;
 		min-width: 200px;
 	}
+
+	.tip {
+		max-width: 150px;
+		text-align: center;
+	}
 }
 
 #diaInfo > article {
