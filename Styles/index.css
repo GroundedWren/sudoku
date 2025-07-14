@@ -371,7 +371,7 @@ form, article {
 					content: "";
 
 				}
-				> span {
+				:is(> span, gw-tooltip span) {
 					&:has(input:checked) {
 						background-color: var(--selected-color);
 					}
@@ -417,6 +417,7 @@ dialog {
 }
 
 #diaNew {
+	overflow: visible;
 	> form {
 		display: flex;
 		flex-direction: column;

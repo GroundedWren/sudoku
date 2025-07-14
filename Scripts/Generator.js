@@ -134,11 +134,59 @@ window.GW = window.GW || {};
 	}
 
 	function isSingleSolution(cellSet) {
-		return true; //todo
+		const unsolvedCells = [];
+		const solvedCells = [];
+		let solCellsCnt = 0;
+		cellSet.forEach(cell => {
+			cell.TempBlocks = Object.keys(cell.Blocks).reduce((accu, val) => {
+				accu[val] = cell.Blocks[val];
+				return accu;
+			}, {})
+			cell.TempTryIdx = 0;
+			cell.TempValue = cell.Value;
+			if(cell.Value === null) {
+				unsolvedCells.push(cell);
+			}
+			else {
+				solvedCells.push(cell);
+				solCellsCnt++;
+			}
+		});
+
+		let solutionCount = 0;
+		while(solutionCount < 2 && solvedCells.length >= solCellsCnt) {
+			if(!unsolvedCells.length) {
+				solutionCount++;
+
+				const solCell = solvedCells.shift();
+				setCellValue(solCell, null, true);
+				solCell.TempTryIdx += 1;
+				unsolvedCells.unshift(solCell);
+				continue;
+			}
+
+			const cell = unsolvedCells.shift();
+			const options = getOptions(cell, true);
+			if(!options.length || cell.TempTryIdx >= options.length) {
+				cell.TempTryIdx = 0;
+				unsolvedCells.unshift(cell);
+				const solCell = solvedCells.shift();
+				setCellValue(solCell, null, true);
+				solCell.TempTryIdx += 1;
+				unsolvedCells.unshift(solCell);
+			}
+			else {
+				setCellValue(cell, options[cell.TempTryIdx], true);
+				solvedCells.unshift(cell);
+			}
+		}
+
+		return solutionCount === 1;
 	}
 
-	function getOptions(cellObj) {
-		return cellObj.Choices.filter(option => !cellObj.Blocks[option]);
+	function getOptions(cellObj, isTemp) {
+		const blocksProp = isTemp ? "TempBlocks" : "Blocks";
+		return cellObj.Choices.filter(option => !cellObj[blocksProp][option]);
 	}
 
 	function shuffleArray(ary) {
@@ -154,13 +202,16 @@ window.GW = window.GW || {};
 		return valAry.map(valObj => valObj.Item);
 	}
 
-	function setCellValue(cell, value) {
-		const oldValue = cell.Value;
-		cell.Value = value;
+	function setCellValue(cell, value, isTemp) {
+		const valueProp = isTemp ? "TempValue" : "Value";
+		const blocksProp = isTemp ? "TempBlocks" : "Blocks";
+
+		const oldValue = cell[valueProp];
+		cell[valueProp] = value;
 		cell.Links.forEach(linkCell => {
-			linkCell.Blocks[oldValue ?? value] = (value === null)
-				? Math.max(0, linkCell.Blocks[oldValue]) - 1
-				: linkCell.Blocks[value] + 1;
+			linkCell[blocksProp][oldValue ?? value] = (value === null)
+				? Math.max(0, linkCell[blocksProp][oldValue]) - 1
+				: linkCell[blocksProp][value] + 1;
 		});
 	}
 }) (window.GW.Sudoku.Generator = window.GW.Sudoku.Generator || {});
