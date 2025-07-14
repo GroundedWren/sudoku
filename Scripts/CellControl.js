@@ -141,6 +141,7 @@ window.GW = window.GW || {};
 			}
 		}
 		td[aria-selected="true"] ${CellEl.Name} {
+			background-color: var(--mark-color) !important;
 			.diamond {
 				opacity: 1 !important;
 				background-color: var(--border-color);
