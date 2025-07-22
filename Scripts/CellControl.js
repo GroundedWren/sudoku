@@ -286,11 +286,11 @@ window.GW = window.GW || {};
 			const data = this.getData();
 			this.innerHTML = `
 				<div class="top">${data.Locked
-					? `<gw-icon iconKey="lock" title="Locked"></gw-icon>`
+					? `<gw-icon iconKey="lock" name="Locked"></gw-icon>`
 					: `<div class="pencil">
 						${data.Pencil.length ? `<span class="sr-only">Pencil selections</span>` : ""}
 						${data.Pencil.join(", ")}</div>`}
-					${data.Invalid ? `<gw-icon iconKey="xmark" title="Invalid"></gw-icon>` : ""}
+					${data.Invalid ? `<gw-icon iconKey="xmark" name="Invalid"></gw-icon>` : ""}
 				</div>
 				<div data-number="${data.Number}" class="bkg">
 					<span class="sr-only">Value</span>
