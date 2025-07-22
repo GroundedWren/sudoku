@@ -15,7 +15,6 @@
 	<script src="./Scripts/ActionBatcherGizmo.js"></script>
 	<script src="./Scripts/OptionListboxControl.js"></script>
 	<script src="./Scripts/CheckListboxControl.js"></script>
-	<script src="./Scripts/TooltipsControl.js"></script>
 
 	<script src="./Scripts/Display.js"></script>
 	<script src="./Scripts/Generator.js"></script>
@@ -338,17 +337,20 @@
 					<input id="numHints" type="number" min="25" max="80" value="38" required autofocus="">
 				</label>
 				<label>
-					<gw-tooltip preferredPos="top">
-						<span class="tool" tabindex="-1">
-							<input id="cbxGenHardMode" type="checkbox">
-							Hard mode
-						</span>
-						<span class="tip">
-							Game may not have a single solution.
-						</span>
-					</gw-tooltip>
+					<span>
+						<input id="cbxGenHardMode" type="checkbox">
+						Hard mode
+					</span>
 				</label>
 			</div>
+			<span class="info-tip hard-mode">
+				<gw-icon iconKey="circle-info" name="Information"></gw-icon>
+				Game may not have a single solution.
+			</span>
+			<span class="info-tip normal-mode">
+				<gw-icon iconKey="circle-info" name="Information"></gw-icon>
+				Game will have a single solution.
+			</span>
 			<footer>
 				<button type="submit">Begin</button>
 				<button type="button" onclick="document.getElementById('diaNew').close()">Cancel</button>

@@ -356,6 +356,7 @@ form, article {
 		display: grid;
 		grid-template-columns: 1fr auto;
 		row-gap: 5px;
+		user-select: none;
 
 		> label {
 			text-align: end;
@@ -371,7 +372,7 @@ form, article {
 					content: "";
 
 				}
-				:is(> span, gw-tooltip span) {
+				> span {
 					&:has(input:checked) {
 						background-color: var(--selected-color);
 					}
@@ -423,11 +424,22 @@ dialog {
 		flex-direction: column;
 		gap: 5px;
 		min-width: 200px;
+		align-items: stretch;
 	}
 
-	.tip {
-		max-width: 150px;
-		text-align: center;
+	&:has(#cbxGenHardMode:checked) .normal-mode {
+		display: none;
+	}
+	&:not(:has(#cbxGenHardMode:checked)) .hard-mode {
+		display: none;
+	}
+
+	.info-tip {
+		display: grid;
+		grid-template-columns: 1fr 9em;
+		text-align: end;
+		justify-items: end;
+		gap: 4px;
 	}
 }
 
