@@ -13,6 +13,7 @@
 	<script src="./Scripts/SwitchControl.js"></script>
 	<script src="./Scripts/ToasterControl.js"></script>
 	<script src="./Scripts/ActionBatcherGizmo.js"></script>
+	<script src="./Scripts/TablistControl.js"></script>
 	<script src="./Scripts/OptionListboxControl.js"></script>
 	<script src="./Scripts/CheckListboxControl.js"></script>
 
@@ -225,14 +226,19 @@
 				<h2 id="hCell">Cell S1-R1-C1</h2>
 				<p id="pPosition"><em>Row 1 Column 1</em></p>
 			</hgroup>
-			<gw-option-listbox id="olbValue">
+			<gw-tablist id="tabMode" container="frmCell">
 				<fieldset>
-					<legend style="display: none;">Value</legend>
+					<legend>Mode</legend>
+					<button id="btnPen" aria-controls="olbValue" aria-selected="true">Pen</button>
+					<button id="btnPencil" aria-controls="clbPencil">Pencil</button>
+				</fieldset>
+			</gw-tablist>
+			<gw-option-listbox id="olbValue">
+				<fieldset aria-labelledby="btnPen">
 				</fieldset>
 			</gw-option-listbox>
 			<gw-check-listbox id="clbPencil">
-				<fieldset>
-					<legend>Pencil</legend>
+				<fieldset aria-labelledby="btnPencil">
 				</fieldset>
 			</gw-check-listbox>
 			<span id="spnLocked">Locked</span>

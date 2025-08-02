@@ -258,7 +258,27 @@ footer {
 		}
 	}
 
-	fieldset {
+	gw-tablist fieldset {
+		display: flex;
+		flex-direction: row;
+		gap: 2px;
+		padding: 0;
+		border: none;
+
+		[tabindex="-1"]:focus {
+			outline: none !important;
+		}
+
+		> * {
+			flex-grow: 1;
+		}
+
+		legend {
+			display: none;
+		}
+	}
+
+	:is(gw-check-listbox, gw-option-listbox) fieldset {
 		display: grid;
 		grid-template-columns: auto auto auto;
 		justify-content: space-around;
@@ -278,7 +298,7 @@ footer {
 			border: 0;
 		}
 		th {
-			width: 0%;
+			width: 0;
 			word-break: keep-all;
 			padding-inline: 2px;
 		}

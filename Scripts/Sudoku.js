@@ -256,7 +256,6 @@ window.GW = window.GW || {};
 
 		const olbValue = document.getElementById("olbValue");
 		olbValue.querySelector(`fieldset`).innerHTML = `
-			<legend style="display: none;">Value</legend>
 			${[1, 2, 3, 4, 5, 6, 7, 8, 9].map(number =>
 				`<label>
 					<input type="radio" name="value" value="${number}" ${ number === cellData.Number ? "checked" : ""}>
@@ -267,7 +266,6 @@ window.GW = window.GW || {};
 
 		const clbPencil = document.getElementById("clbPencil");
 		clbPencil.querySelector(`fieldset`).innerHTML = `
-			<legend>Pencil</legend>
 			${[1, 2, 3, 4, 5, 6, 7, 8, 9].map(number =>
 				`<label>
 					<input type="checkbox" value="${number}" ${ cellData.Pencil.includes(number) ? "checked" : ""}>
@@ -289,13 +287,16 @@ window.GW = window.GW || {};
 		)].map(cellEl => cellEl.getData().Number).filter(number => !!number).join(", ");
 
 		const spnLocked = document.getElementById("spnLocked");
+		const tabMode = document.getElementById("tabMode");
 		if(cellData.Locked) {
 			spnLocked.classList.remove("hidden");
+			tabMode.classList.add("hidden");
 			olbValue.classList.add("hidden");
 			clbPencil.classList.add("hidden");
 		}
 		else {
 			spnLocked.classList.add("hidden");
+			tabMode.classList.remove("hidden");
 			olbValue.classList.remove("hidden");
 			clbPencil.classList.remove("hidden");
 		}
@@ -308,6 +309,7 @@ window.GW = window.GW || {};
 
 		const radValue = document.querySelector(`input[name="value"][value="${value}"]`);
 		radValue.checked = !radValue.checked;
+		document.getElementById("tabMode").selectTab(document.getElementById("btnPen"));
 		ns.saveBoundCell();
 	}
 
@@ -318,6 +320,7 @@ window.GW = window.GW || {};
 
 		const chkValue = document.querySelector(`#clbPencil input[value="${value}"]`);
 		chkValue.click();
+		document.getElementById("tabMode").selectTab(document.getElementById("btnPencil"));
 		ns.saveBoundCell();
 	};
 
