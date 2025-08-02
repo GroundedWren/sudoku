@@ -309,7 +309,7 @@ window.GW = window.GW || {};
 
 		const radValue = document.querySelector(`input[name="value"][value="${value}"]`);
 		radValue.checked = !radValue.checked;
-		document.getElementById("tabMode").selectTab(document.getElementById("btnPen"));
+		document.getElementById("btnPen").click();
 		ns.saveBoundCell();
 	}
 
@@ -320,7 +320,7 @@ window.GW = window.GW || {};
 
 		const chkValue = document.querySelector(`#clbPencil input[value="${value}"]`);
 		chkValue.click();
-		document.getElementById("tabMode").selectTab(document.getElementById("btnPencil"));
+		document.getElementById("btnPencil").click();
 		ns.saveBoundCell();
 	};
 

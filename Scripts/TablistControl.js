@@ -139,22 +139,18 @@ window.GW = window.GW || {};
 			if(newTab) {
 				event.preventDefault();
 				newTab.click();
+				newTab.focus();
 			}
 		};
 
 		onTabClick = (event) => {
 			const clickedTab = event.currentTarget;
-			this.selectTab(event.currentTarget);
-			clickedTab.focus();
-		};
-
-		selectTab(selTabEl) {
 			this.TabAry.forEach(tabEl => {
-				tabEl.setAttribute("aria-selected", tabEl === selTabEl);
-				tabEl.setAttribute("tabindex", tabEl === selTabEl ? "0" : "-1");
+				tabEl.setAttribute("aria-selected", tabEl === clickedTab);
+				tabEl.setAttribute("tabindex", tabEl === clickedTab ? "0" : "-1");
 				this.updateIcon(tabEl);
 			});
-		}
+		};
 
 		updateIcon(tabEl) {
 			const isSelected = tabEl.getAttribute("aria-selected") === "true";
