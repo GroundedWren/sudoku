@@ -290,6 +290,8 @@ footer {
 		[role="option"] {
 			min-height: 30px;
 			min-width: 50px;
+			border-radius: 10px;
+			justify-content: center;
 		}
 	}
 
