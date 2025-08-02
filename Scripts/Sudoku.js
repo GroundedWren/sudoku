@@ -125,6 +125,8 @@ window.GW = window.GW || {};
 			Last.Data = JSON.parse(localStorage.getItem("data"));
 			localStorage.setItem("data", JSON.stringify(ns.Data));
 		}
+
+		updateCellSurroundings();
 	};
 
 	function doAutoValidate() {
@@ -273,18 +275,8 @@ window.GW = window.GW || {};
 				</label>`
 			).join("\n")}
 		`;
-
-		document.getElementById("tdRow").innerText = [...document.querySelectorAll(
-			`gw-cell[data-row="${formBoundCell.Row}"]`
-		)].map(cellEl => cellEl.getData().Number).filter(number => !!number).join(", ");
-
-		document.getElementById("tdCol").innerText = [...document.querySelectorAll(
-			`gw-cell[data-col="${formBoundCell.Col}"]`
-		)].map(cellEl => cellEl.getData().Number).filter(number => !!number).join(", ");
-
-		document.getElementById("tdSquare").innerText = [...document.querySelectorAll(
-			`gw-cell[data-squ="${formBoundCell.Square}"]`
-		)].map(cellEl => cellEl.getData().Number).filter(number => !!number).join(", ");
+		
+		updateCellSurroundings();
 
 		const spnLocked = document.getElementById("spnLocked");
 		const tabMode = document.getElementById("tabMode");
@@ -300,6 +292,38 @@ window.GW = window.GW || {};
 			olbValue.classList.remove("hidden");
 			clbPencil.classList.remove("hidden");
 		}
+	}
+
+	function updateCellSurroundings() {
+		document.getElementById("trSurroundings").innerHTML = [1, 2, 3, 4, 5, 6, 7, 8, 9].reduce((accu, num) =>  {
+			return accu + `<th scope="col">${num}</td>`
+		}, `<td></td>`);
+
+		document.getElementById("trRow").innerHTML = `<th scope="row">Row:</th>` + getSurroundingHTML(
+			[...document.querySelectorAll(`gw-cell[data-row="${formBoundCell.Row}"]`)]
+		);
+		document.getElementById("trCol").innerHTML = `<th scope="row">Col:</th>` + getSurroundingHTML(
+			[...document.querySelectorAll(`gw-cell[data-col="${formBoundCell.Col}"]`)]
+		);
+		document.getElementById("trSquare").innerHTML = `<th scope="row">Square:</th>` + getSurroundingHTML(
+			[...document.querySelectorAll(`gw-cell[data-squ="${formBoundCell.Square}"]`)]
+		);
+		document.getElementById("trAll").innerHTML = getSurroundingHTML(
+			[...document.querySelectorAll(`gw-cell:is([data-row="${formBoundCell.Row}"], [data-col="${formBoundCell.Col}"], [data-squ="${formBoundCell.Square}"])`)]
+		);
+	}
+
+	function getSurroundingHTML(elementAry) {
+		const values = elementAry.reduce((accu, cellEl) => {
+			return accu.add(cellEl.getData().Number);
+		}, new Set());
+
+		return [1, 2, 3, 4, 5, 6, 7, 8, 9].reduce((accu, num) =>  {
+			const description = values.has(num) ? "present" : "missing";
+			return accu + `<td>
+				<div role="figure" aria-label="${description}"><span>${num}</span></div>
+			</td>`
+		}, "");
 	}
 
 	ns.quickSelect = (value) => {

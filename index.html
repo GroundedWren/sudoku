@@ -244,22 +244,23 @@
 			<span id="spnLocked">Locked</span>
 			<details>
 				<summary id="sumSurroundings">Surroundings</summary>
-				<table aria-labelledby="sumSurroundings">
-					<tbody>
-						<tr>
-							<th scope="row">Row:</th>
-							<td id="tdRow"></td>
-						</tr>
-						<tr>
-							<th scope="row">Column:</th>
-							<td id="tdCol"></td>
-						</tr>
-						<tr>
-							<th scope="row">Square:</th>
-							<td id="tdSquare"></td>
-						</tr>
-					</tbody>
-				</table>
+				<div>
+					<label>
+						<gw-switch><input id="cbxFlatten" type="checkbox"></gw-switch>
+						Flatten
+					</label>
+					<table aria-labelledby="sumSurroundings">
+						<thead class="sr-only">
+							<tr id="trSurroundings"></tr>
+						</thead>
+						<tbody>
+							<tr id="trRow"></tr>
+							<tr id="trCol"></tr>
+							<tr id="trSquare"></tr>
+							<tr id="trAll"></tr>
+						</tbody>
+					</table>
+				</div>
 			</details>
 		</form>
 		<section id="secRight">
