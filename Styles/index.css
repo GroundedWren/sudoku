@@ -379,7 +379,7 @@ form, article {
 				}
 			}
 
-			&:has(:focus) {
+			&:has(:focus-within) {
 				> span {
 					background-color: var(--mark-color);
 				}
